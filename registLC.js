@@ -20,10 +20,7 @@ function loadLongerCombatConfig() {
   try {
     const data = localStorage.getItem(CONFIG_KEY);
     if (data) {
-      Object.assign(
-        State.variables.iModConfigs.longerCombat,
-        JSON.parse(data)
-      );
+      Object.assign(State.variables.iModConfigs.longerCombat, JSON.parse(data));
     }
   } catch (e) {
     console.error("读取配置失败:", e);
@@ -33,8 +30,11 @@ function loadLongerCombatConfig() {
 // 页面加载时自动读取
 $(document).on(":passageinit", () => {
   // Ensure the config object exists
+  if (!State.variables.iModConfigs) {
+    return;
+  }
   if (!State.variables.iModConfigs.longerCombat) {
-    State.variables.iModConfigs.longerCombat = {};
+    return;
   }
   const config = State.variables.iModConfigs.longerCombat;
   if (config?.saved) {
